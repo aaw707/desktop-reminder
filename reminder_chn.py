@@ -18,7 +18,7 @@ layout = [
             # Remind me to...
             [sg.Text('提醒事项：', font=(font, font_size), key="_TEXT1_", text_color = text_color, background_color = background_color)],
             # input the task
-            [sg.Input(' ', size = (37, 1), do_not_clear=True, key='_CONTENT_', font = (font, font_size - 2), text_color = text_color)],
+            [sg.Input('', size = (37, 1), do_not_clear=True, key='_CONTENT_', font = (font, font_size - 2), text_color = text_color)],
             # At XX:XX (time, hour:min  e.g. 9:00)
             [sg.Text('提醒时间', size=(8, 1), font=(font, font_size), key="_TEXT2_", text_color = text_color, background_color = background_color),
                 sg.Input(00, key='_TARGET_HR_',  size=(3, 1), font = (font, font_size - 2), text_color = text_color),
@@ -40,7 +40,7 @@ layout = [
             [sg.Text('', font = (font, font_size), key = "_UPCOMING_REMINDERS_", text_color = text_color, background_color = background_color)]]
 
 # initiate the window
-window = sg.Window('提醒~(*๓´╰╯`๓)', enable_close_attempted_event=True, background_color = background_color).Layout(layout)
+window = sg.Window('提醒', enable_close_attempted_event=True, background_color = background_color).Layout(layout)
 
 # minimized system tray
 menu = ['', ['显示窗口', '退出']]
@@ -117,6 +117,7 @@ while True:
         window['_TARGET_MIN_'].update(0)
         window['_LENGTH_HR_'].update(0)
         window['_LENGTH_MIN_'].update(0)
+        window['_CONTENT_'].update('')
     
     # if there are active reminders
     if active_reminders != {}:
@@ -126,7 +127,7 @@ while True:
         if list(active_reminders.values())[0] == current_time:
             # show notification
             print("done")
-            toaster.show_toast(values['_CONTENT_'], "时间到啦QAQ", icon_path='icon.ico', duration=10, threaded=True)
+            toaster.show_toast(values['_CONTENT_'], "时间到啦!", icon_path='icon.ico', duration=10, threaded=True)
             # remove it from the list
             active_reminders.pop(list(active_reminders.keys())[0])
 
